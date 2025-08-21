@@ -1,77 +1,71 @@
-# Names example
+# Programación orientada a objetos
+
+"""
+Dice que el software debe organizarse en objetos que son instancias de clases
+
+Son una plantilla genérica, debe tener caracteríasticas o atributos
+"""
 
 class Person:
-    # This is the constructor of the class Person
-    def __init__(self, name, age):
+    def __init__(self, name, edad):
+        # Su nombre va a ser el parámetro que recibimos
         self.name = name
-        self.age = age
-    
+        # Su edad va a ser el parámetro que recibimos
+        self.edad = edad
+
     def greet(self):
-        print(f"Hi my name is {self.name} and I'm {self.age} years old")
+        print(f"Hola, mi nombre es {self.name} y tengo {self.edad}")
 
-# Objects:
 
-person1 = Person("Juan Pablo", 24)
-person2 = Person("Sylvana", 25)
+# Crear el objeto
+person = Person("JP", 24)
+perosn_1 = Person("Juan", 25)
 
-person1.greet()
-person2.greet()
+# Esto es el metodo
+person.greet()
+perosn_1.greet()
 
-print('--------------------------------')
-
-# Banking exmaple
+# Bank account
 
 class BankAccount:
-    def __init__(self, name, balance, credit_card, bank_name):
-        self.name = name
+    def __init__(self, holder, balance) -> None:
+        self.holder = holder
         self.balance = balance
-        self.credit_card = credit_card
-        self.bank_name = bank_name
-        # when I need to use a boolean value, True or False, I don't need to add the value in the constructor
-        self.account_active = True
-        self.credit_card_active = True
-
-
-    def deposit(self, deposit_amount, date, time):
-        if self.account_active:
-            self.balance += deposit_amount
-            self.date = date
-            self.time = time
-            # Show the deposit information and the balance
-            print(f'Hi {self.name} you have deposited {deposit_amount} on {self.date} at {self.time}. Your current balance is growing, now you have {self.balance}!!!')
-        else: 
-            print(f"Hi {self.name} you account is sleeping, please wake it up")
+        self.is_active = True
     
-    def withdraw(self, withdraw_amount, date, time):
-        if self.account_active:
-            if self.balance >= withdraw_amount:
-                self.balance -= withdraw_amount
-                self.date = date
-                self.time = time
-            # Show the new balance
-                print(f'Hi {self.name} you have withdrawn {withdraw_amount} on {self.date} at {self.time}. I hope it is an investment, because your current balance is {self.balance}')
+    def deposit(self, amount):
+        if self.is_active:
+            self.balance += amount
+            print(f"Se han depositado {amount} y el saldo actual es {self.balance}")
         else:
-            print(f"I'm sorry, you are out of funds, get back to work")
-                    
+            print("La cuenta no está activa")
+
+    def withdraw(self, amount):
+        if self.is_active:
+            if amount <= self.balance:
+                self.balance -= amount
+                print(f"Se ha retirado {amount} y el saldo actual es de {self.balance}")
+    
     def deactivate(self):
-        self.account_active = False
-        print("The account is sleeping")
-
-    def active(self):
-        self.account_active = True
-        print("The account is ready to work again!")
-
-account1 = BankAccount("Juan Pablo", 5000, "yes", "Nu")
-account2 = BankAccount("JP", 15000, "no", "Davivienda")
-
-# Deposit
-
-account1.deposit(500, "24/10/2000", "18:00 pm")
-account2.deposit(100, "25/10/2000", "18:01")
-account2.deactivate()
-account2.deposit(100, "25/10/2000", "18:01")
-account2.active()
-account2.deposit(200, "26/10/2000", "18:01")
-account1.withdraw(50, "22/11/2000", "18:02")
+        self.is_active = False
+        print("La cuenta está desactivadad")
+    
+    def activate(self):
+        self.is_active = True
+        print("La cuenta está activadad")
 
 
+# crear objetos
+
+account = BankAccount("JP", 500)
+account_2 = BankAccount("Juan", 200)
+
+# Llamada a los metodos
+
+account.deposit(200)
+account_2.deposit(150)
+account.deactivate()
+account.deposit(150)
+account.activate()
+account.deposit(50)
+account.withdraw(25)
