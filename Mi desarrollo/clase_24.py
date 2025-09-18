@@ -127,6 +127,12 @@ class Cars:
             f"The car {self.brand} model {self.year} at a price of {self.price} is available"
         )
 
+    def check_availability(self):
+        return self.availability
+
+    def check_price(self):
+        return self.price
+
 
 class Driver:
     def __init__(self, name):
@@ -134,7 +140,7 @@ class Driver:
         self.car_bought = []
 
     def buy_car(self, car):
-        if car.availability:
+        if car.check_availability:
             car.sold_inventory()
             self.car_bought.append(car)
         else:
@@ -146,6 +152,10 @@ class Driver:
             self.car_bought.remove(car)
         else:
             print(f"The car {car.brand} is now available")
+
+    def inquire_car(sefl, car):
+        available = "available" if car.availability() else "not available"
+        print(f"The car {car.brand} {car.brand} is {available} and costs {car.price} ")
 
 
 class Retail:
@@ -164,7 +174,7 @@ class Retail:
     def availability(self):
         print("Available cars")
         for car in self.cars:
-            if car.availability:
+            if car.check_availability:
                 print(
                     f"The car {car.brand} of {car.year} is available at a price of {car.price}"
                 )
