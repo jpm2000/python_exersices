@@ -325,8 +325,8 @@ def main():
 
 
 # Descomenta para probar tu implementación:
-# if __name__ == "__main__":
-# main()
+if __name__ == "__main__":
+    main()
 
 # INSTRUCCIONES:
 # ==============
@@ -344,6 +344,8 @@ def main():
 # - Encapsulamiento: Atributos privados y métodos públicos para acceder a ellos
 # - Abstracción: Clases que representan conceptos del mundo real
 
+print("")
+print(20 * "-")
 print("Prueba clase Persona")
 persona = Persona("JP", 24, 1000611715)
 persona.presentarse()
