@@ -63,20 +63,27 @@ class Empleado(Persona):
     def __init__(self, nombre, edad, documento, salario_base, departamento):
         # TODO: Usar super() para inicializar los atributos de Persona
         # TODO: Añadir atributos específicos: salario_base, departamento
-        pass
+        super().__init__(nombre, edad, documento)
+        self.salario_base = salario_base
+        self.departamento = departamento
 
     def trabajar(self):
         # TODO: Método genérico (será sobrescrito por las subclases)
-        pass
+        raise NotImplementedError(
+            "Esta clase debe ser ejecutada por una subclase que especifica el trabajo de la persona"
+        )
 
     def calcular_salario(self):
         # TODO: Método genérico que retorna el salario base
-        pass
+        print(f"El salario base de {self.nombre} es: {self.salario_base}")
 
     def presentarse(self):
-        # TODO: Usar super() para llamar al método de Persona
+        # TODO: Usar super() para llamar al método de Persona.
+        # ¿Cuando se refiere al metodo de persona se refiere a traer la información básica de la persona?
         # TODO: Añadir información específica del empleado
-        pass
+        super().presentarse()
+        super().obtener_info_basica()
+        print(f"Salario: {self.salario_base}, Departamento: {self.departamento}")
 
 
 # PARTE 2: Implementa las subclases especializadas
@@ -86,67 +93,114 @@ class Empleado(Persona):
 class Desarrollador(Empleado):
     """Subclase de Empleado especializada en desarrollo"""
 
-    def __init__(self, nombre, edad, documento, salario_base, lenguajes):
+    def __init__(
+        self, nombre, edad, documento, salario_base, departamento, lenguajes: list
+    ):
         # TODO: Usar super() para inicializar Empleado (departamento = "Desarrollo")
         # TODO: Añadir atributo: lenguajes (lista de lenguajes de programación)
-        pass
+        super().__init__(nombre, edad, documento, salario_base, departamento)
+        self.lenguajes = list(lenguajes)
+        # ¿Aca no deberia dejar el constructur sin lenguajes y luego agregar un atributo llamado self.lenguajes = [] para crear la lista?
 
     def trabajar(self):
         # TODO: Implementar método específico
-        print(f"{self.nombre} está escribiendo código...")
+        print(f"{self.nombre} está escribiendo código en {self.lenguajes}")
 
     def calcular_salario(self):
         # TODO: Usar super() para obtener salario base
         # TODO: Añadir bonificación del 20% por lenguajes conocidos
-        pass
+        super().calcular_salario()
+        deseadas = ["Python", "JavaScript", "Node", "Type Script", "Java", "C++"]
+        coincide = any(code in self.lenguajes for code in deseadas)
+        # Toca entender porque aparece así con una raya amarilla
+        if coincide == True:
+            self.salario_base = self.salario_base * 1.20
+            print(
+                f"El salario actual de {self.nombre} es {self.salario_base}, tiene un aumento por sus habilidades"
+            )
+        else:
+            print("No posee las habilidades necesarias")
 
     def programar(self, proyecto):
         # TODO: Método específico de desarrollador
-        pass
+        print(
+            f"El desarrollador sabe programar en {self.lenguajes} lo cual sirve para el proyecto {proyecto}"
+        )
 
 
 class Gerente(Empleado):
     """Subclase de Empleado especializada en gestión"""
 
-    def __init__(self, nombre, edad, documento, salario_base, equipo_a_cargo):
+    def __init__(
+        self, nombre, edad, documento, salario_base, departamento, equipo_a_cargo
+    ):
         # TODO: Usar super() para inicializar Empleado (departamento = "Gerencia")
         # TODO: Añadir atributo: equipo_a_cargo (número de personas)
-        pass
+        super().__init__(nombre, edad, documento, salario_base, departamento)
+        self.equipo_a_cargo = equipo_a_cargo
 
     def trabajar(self):
         # TODO: Implementar método específico
-        print(f"{self.nombre} está gestionando el equipo...")
+        print(
+            f"{self.nombre} está gestionando el equipo de {self.equipo_a_cargo} personas"
+        )
 
     def calcular_salario(self):
         # TODO: Usar super() para obtener salario base
         # TODO: Añadir bonificación de $500 por cada persona en el equipo
-        pass
+        super().calcular_salario()
+        if self.equipo_a_cargo > 0:
+            self.salario_base = self.salario_base + (self.equipo_a_cargo * 500)
+            print(f"El salario final de {self.nombre} es de {self.salario_base}")
+        else:
+            print(f"El salario de {self.nombre} sigue siendo {self.salario_base}")
 
     def dirigir_reunion(self, tema):
         # TODO: Método específico de gerente
-        pass
+        print(
+            f"{self.nombre} tiene a cargo a {self.equipo_a_cargo} personas para el proyecto {tema}"
+        )
 
 
 class Vendedor(Empleado):
     """Subclase de Empleado especializada en ventas"""
 
-    def __init__(self, nombre, edad, documento, salario_base, meta_ventas):
+    def __init__(
+        self, nombre, edad, documento, salario_base, departamento, meta_ventas
+    ):
         # TODO: Usar super() para inicializar Empleado (departamento = "Ventas")
         # TODO: Añadir atributos: meta_ventas, ventas_realizadas (iniciar en 0)
-        pass
+        super().__init__(nombre, edad, documento, salario_base, departamento)
+        self.meta_ventas = meta_ventas
+        self.ventas_realizadas = 0
 
     def trabajar(self):
         # TODO: Implementar método específico
-        print(f"{self.nombre} está contactando clientes...")
+        print(
+            f"{self.nombre} está contactando clientes para llegar a {self.meta_ventas} y va {self.ventas_realizadas}"
+        )
 
     def calcular_salario(self):
         # TODO: Usar super() para obtener salario base
         # TODO: Añadir comisión del 10% sobre ventas realizadas
-        pass
+        super().calcular_salario()
+        if self.ventas_realizadas > 0:
+            self.salario_base = self.salario_base + (self.ventas_realizadas * 0.10)
+            print(f"El salario actualizado de {self.nombre} es de {self.salario_base}")
+        else:
+            print(
+                f"El salario actual de {self.nombre} es de {self.salario_base}, ya que no ha aumentados sus ventas"
+            )
 
     def realizar_venta(self, monto):
         # TODO: Método para registrar una venta
-        pass
+        if monto > 0:
+            self.ventas_realizadas = self.ventas_realizadas + monto
+            print(
+                f"{self.nombre} ha realizado una nueva venta y ahora va: {self.ventas_realizadas}"
+            )
+        else:
+            print(f"{self.nombre} no ha vendido nada, puro humo")
 
 
 # PARTE 3: Implementa la clase Empresa
@@ -158,27 +212,56 @@ class Empresa:
 
     def __init__(self, nombre):
         # TODO: Inicializar nombre de empresa y lista vacía de empleados
-        pass
+        self.nombre = nombre
+        self.empleados = []
 
-    def contratar_empleado(self, empleado):
+    def contratar_empleado(self, empleado: Empleado):
         # TODO: Añadir empleado a la lista
-        pass
+        self.empleados.append(empleado)
+        print(
+            f"Tenemos un nuevo empleado en la empresa, su nombre es {empleado.nombre} y está en el departamento de {empleado.departamento}"
+        )
 
     def mostrar_empleados(self):
         # TODO: Mostrar información de todos los empleados
-        pass
+        print(f"Los empleados de la empresa: {self.empleados}")
 
     def calcular_nomina_total(self):
         # TODO: Calcular la suma de todos los salarios (POLIMORFISMO)
-        pass
+        for salario in self.empleados:
+            if salario.calcular_salario() == 0:
+                print(f"En {self.nombre} no han contratado a nadie")
+            else:
+                suma = sum(salario)
+                print(
+                    f"La empresa {self.nombre} está gastando en salarios mensuales: {suma}"
+                )
 
     def hacer_trabajar_a_todos(self):
         # TODO: Llamar al método trabajar() de cada empleado (POLIMORFISMO)
-        pass
+        print(
+            f"La información de todos los trabajadores en {self.nombre} es la siguiente:"
+        )
+        if self.empleados == 0:
+            print(
+                "No se puede mostrar la información de los trabajadores porque no han contratado"
+            )
+        else:
+            for trabajo in self.empleados:
+                print(f"- {trabajo}")
 
-    def empleados_por_departamento(self, departamento):
+    def empleados_por_departamento(self, departamento: Empleado):
         # TODO: Filtrar empleados por departamento
-        pass
+        print(
+            f"La información de todos los trabajadores por departamento en {self.nombre} es la siguiente:"
+        )
+        if self.empleados == 0:
+            print(
+                "No se puede mostrar la información de los trabajadores por departamento que no han contratado"
+            )
+        else:
+            for dept in empleado.departamento:
+                print(f"- {dept}")
 
 
 # PARTE 4: Código de prueba
@@ -192,14 +275,21 @@ def main():
 
     # Crear empleados de diferentes tipos
     dev1 = Desarrollador(
-        "Ana García", 28, "12345678", 80000, ["Python", "JavaScript", "Java"]
+        "Ana García",
+        28,
+        "12345678",
+        80000,
+        "Desarrollo",
+        ["Python", "JavaScript", "Java"],
     )
-    dev2 = Desarrollador("Carlos López", 32, "87654321", 85000, ["C++", "Python"])
+    dev2 = Desarrollador(
+        "Carlos López", 32, "87654321", 85000, "Desarrollo", ["C++", "Python"]
+    )
 
-    gerente1 = Gerente("María Rodríguez", 40, "11223344", 120000, 8)
+    gerente1 = Gerente("María Rodríguez", 40, "11223344", 120000, "C-Level", 8)
 
-    vendedor1 = Vendedor("Pedro Martín", 35, "44332211", 50000, 100000)
-    vendedor2 = Vendedor("Laura Sánchez", 29, "55667788", 48000, 80000)
+    vendedor1 = Vendedor("Pedro Martín", 35, "44332211", 50000, "Ventas", 100000)
+    vendedor2 = Vendedor("Laura Sánchez", 29, "55667788", 48000, "Ventas", 80000)
 
     # Simular algunas ventas
     vendedor1.realizar_venta(25000)
@@ -236,7 +326,7 @@ def main():
 
 # Descomenta para probar tu implementación:
 # if __name__ == "__main__":
-#     main()
+# main()
 
 # INSTRUCCIONES:
 # ==============
@@ -253,3 +343,48 @@ def main():
 # - Polimorfismo: Mismo método (trabajar, calcular_salario) con comportamientos diferentes
 # - Encapsulamiento: Atributos privados y métodos públicos para acceder a ellos
 # - Abstracción: Clases que representan conceptos del mundo real
+
+print("Prueba clase Persona")
+persona = Persona("JP", 24, 1000611715)
+persona.presentarse()
+persona.obtener_info_basica()
+
+print("")
+print("Prueba clase Empleado")
+empleado = Empleado("JP", 25, 1000611715, 4000000, "Desarrollo")
+# empleado.trabajar()
+empleado.calcular_salario()
+empleado.presentarse()
+
+print("")
+print("Prueba clase Desarrollador")
+desarrollador = Desarrollador(
+    "JP", 25, 1000611715, 4000000, "Desarrollo", ["Python", "C++"]
+)
+desarrollador.trabajar()
+desarrollador.calcular_salario()
+desarrollador.programar("Platzi")
+
+print("")
+print("Prueba clase Gerente")
+gerente = Gerente("JP", 25, 1000611715, 4000000, ["Gerencia"], 10)
+gerente.trabajar()
+gerente.calcular_salario()
+gerente.dirigir_reunion("Platzi")
+
+print("")
+print("Prueba clase Ventas")
+vendedor = Vendedor("JP", 25, 1000611715, 4000000, "Ventas", 1000000)
+vendedor.trabajar()
+vendedor.calcular_salario()
+vendedor.realizar_venta(1)
+vendedor.calcular_salario()
+
+print("")
+print("Prueba clase Empresa")
+empresa = Empresa("Mythbusters")
+empresa.contratar_empleado(desarrollador)
+empresa.mostrar_empleados()
+# empresa.calcular_nomina_total()
+empresa.hacer_trabajar_a_todos()
+empresa.empleados_por_departamento("Desarrollo")
