@@ -228,14 +228,11 @@ class Empresa:
 
     def calcular_nomina_total(self):
         # TODO: Calcular la suma de todos los salarios (POLIMORFISMO)
-        for salario in self.empleados:
-            if salario.calcular_salario() == 0:
-                print(f"En {self.nombre} no han contratado a nadie")
-            else:
-                suma = sum(salario)
-                print(
-                    f"La empresa {self.nombre} está gastando en salarios mensuales: {suma}"
-                )
+        suma = 0
+        for empleado in self.empleados:
+            suma += empleado.salario_base
+        print(f"La empresa {self.nombre} está gastando en salarios mensuales: {suma}")
+        return suma
 
     def hacer_trabajar_a_todos(self):
         # TODO: Llamar al método trabajar() de cada empleado (POLIMORFISMO)
@@ -252,6 +249,12 @@ class Empresa:
 
     def empleados_por_departamento(self, departamento: Empleado):
         # TODO: Filtrar empleados por departamento
+        empleados_dept = []
+        for empleado in self.empleados:
+            if empleado.departamento == departamento:
+                empleados_dept.append(empleado)
+            return empleados_dept
+
         print(
             f"La información de todos los trabajadores por departamento en {self.nombre} es la siguiente:"
         )
@@ -262,6 +265,70 @@ class Empresa:
         else:
             for dept in empleado.departamento:
                 print(f"- {dept}")
+
+
+"""
+¡Excelente progreso, Juan Pablo! Veo
+  que ya no hay errores, pero hay dos 
+  problemas importantes en el método
+  empleados_por_departamento() que
+  necesitamos corregir:
+
+  Problema 1: return dentro del bucle
+
+  ¿Qué está pasando?
+  for empleado in self.empleados:
+      if empleado.departamento ==
+  departamento:
+
+  empleados_dept.append(empleado)
+      return empleados_dept  # ❌ ESTO 
+  ESTÁ MAL
+
+  ¿Por qué está mal?
+  - El return está dentro del bucle for
+  - Esto significa que solo verifica el 
+  primer empleado y termina la función
+  - Por eso ves: "Desarrollo: 1
+  empleados" cuando deberían ser 2
+
+  ¿Cómo corregirlo?
+  for empleado in self.empleados:
+      if empleado.departamento ==
+  departamento:
+
+  empleados_dept.append(empleado)
+  return empleados_dept  # ✅ Fuera del 
+  bucle
+
+  Problema 2: Type hint incorrecto
+
+  ¿Qué está mal?
+  def empleados_por_departamento(self, 
+  departamento: Empleado):
+
+  ¿Por qué está mal?
+  - departamento es un string (ej:
+  "Desarrollo", "Ventas")
+  - No es un objeto Empleado
+
+  ¿Cómo corregirlo?
+  def empleados_por_departamento(self, 
+  departamento: str):
+
+  Problema 3: Código inalcanzable
+
+  Todo el código después del return
+  nunca se ejecuta porque la función ya
+  terminó.
+
+  ¿Puedes corregir estos tres problemas?
+   El método debería:
+  1. Buscar TODOS los empleados del
+  departamento
+  2. Retornar la lista completa
+  3. Mantener la indentación correcta
+"""
 
 
 # PARTE 4: Código de prueba
@@ -308,7 +375,8 @@ def main():
     empresa.hacer_trabajar_a_todos()
 
     print(f"\n=== NÓMINA TOTAL ===")
-    print(f"Total a pagar: ${empresa.calcular_nomina_total():,.2f}")
+    print(f"Total a pagar: ${empresa.calcular_nomina_total()}")
+    # print(f"Total a pagar: ${empresa.calcular_nomina_total():,.2f}")
 
     print("\n=== EMPLEADOS POR DEPARTAMENTO ===")
     for dept in ["Desarrollo", "Gerencia", "Ventas"]:
@@ -390,3 +458,5 @@ empresa.mostrar_empleados()
 # empresa.calcular_nomina_total()
 empresa.hacer_trabajar_a_todos()
 empresa.empleados_por_departamento("Desarrollo")
+
+print(f"Total a pagar: ${empresa.calcular_nomina_total()}")
