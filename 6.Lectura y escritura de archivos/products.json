@@ -54,5 +54,21 @@
         "brand": "ChargeMaster",
         "category": "Accessories",
         "entry_date": "2024-07-01"
+    },
+    {
+        "name": "Ketones",
+        "price": 110,
+        "quantity": 50,
+        "brand": "JPM",
+        "category": "nutrition",
+        "entry_date": 1985
+    },
+    {
+        "name": "Ketones",
+        "price": 110,
+        "quantity": 50,
+        "brand": "JPM",
+        "category": "nutrition",
+        "entry_date": 1985
     }
 ]
