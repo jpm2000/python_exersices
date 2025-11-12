@@ -14,4 +14,19 @@ def calculate_average(numbers):
     return sum(numbers) / len(numbers)
 
 
-print(calculate_average([1, 2, 3, 4, 5, 6]))
+# Imprimiendo el resultado (este es un comentario). Esto da información de una linea de código
+print(
+    calculate_average([1, 2, 3, 4, 5, 6])
+)  # No importa si agregue informacíon aca, igual no se va a ver en el resultado
+
+
+def calculate_area(base, height):
+    """
+    Calcula el area de un triangulo.
+
+    Parámetros: variables de la base y la altura
+
+    Retorna: el area del triangulo
+    """
+    # Multiplicamos la base por la altura --> este comentario se deberia eliminar y dejar solo el docstring
+    return (base * height) / 2
