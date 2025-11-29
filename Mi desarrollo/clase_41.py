@@ -1,3 +1,6 @@
+from typing import TypeAlias
+
+
 # Se pueden poner luego de los doble puntos el tipo de dato que se tiene para esa variable
 
 id1: int = 101
@@ -62,3 +65,60 @@ def find_employees(employee_ids: list[int], employee_id: int) -> Optional[int]:
 
 def process_salary(salary: Union[int, float]) -> float:
     return float(salary)
+
+
+print("")
+
+print("Ejercicio")
+
+"""
+Te animamos a aplicar estos conceptos creando una función que procese diccionarios de empleados y los filtre según el salario
+"""
+
+empleados = [
+    {"name": "Juan Pablo", "age": 25, "salary": 10000, "job": "CEO"},
+    {"name": "Pablo", "age": 24, "salary": 1000, "job": "sales"},
+    {"name": "Juan", "age": 21, "salary": 20000, "job": "product"},
+]
+
+target = 1000
+
+
+def salary(diccionario: list[dict]) -> Optional[dict]:
+    result = []
+    for i in diccionario:
+        if "salary" in i and i["salary"] > target:
+            result.append(i)
+    return result
+
+
+print(salary(empleados))
+
+
+# Función mas pythonico
+
+print("")
+print("Ejercicio 2")
+
+Empleado_type: TypeAlias = dict[str, int | str]
+
+
+def salary_2(dic: list[Empleado_type], target: int) -> str:
+    empleados_filtrados = [
+        empleado
+        for empleado in dic
+        if "salary" in empleado and empleado["salary"] > target
+    ]
+
+    if not empleados_filtrados:
+        return f"no se encontraron empleados con un salario mayor a {target}"
+
+    lineas = [
+        f"El empleado se llama {empleado['name']} y se gana {empleado['salary']}, lo cual está por encima del {target}"
+        for empleado in empleados_filtrados
+    ]
+
+    return "\n".join(lineas)
+
+
+print(salary_2(empleados, 1500))
