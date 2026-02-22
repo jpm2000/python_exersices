@@ -2,7 +2,7 @@
 
 add = lambda a, b: a + b
 
-print(add(10,4))
+print(add(10, 4))
 
 
 multiply = lambda a, b: a * b
@@ -10,7 +10,7 @@ multiply = lambda a, b: a * b
 print(multiply(10, 4))
 
 
-# Calcular el cuadrado de cada numero 
+# Calcular el cuadrado de cada numero
 
 numbers = range(11)
 
@@ -30,6 +30,5 @@ filter() takes two arguments:
 function: This is a function (or None) that will be applied to each element of the iterable. It should return a boolean value (True or False). If None is provided, filter() returns elements that are inherently truthy.
 iterable: This is any iterable object, such as a list, tuple, string, or set.
 """
-even = list(filter(lambda x: x%2 == 0, numbers))
+even = list(filter(lambda x: x % 2 == 0, numbers))
 print("pares: ", even)
-
