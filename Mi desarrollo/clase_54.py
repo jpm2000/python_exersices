@@ -5,7 +5,7 @@ class Employee:
     # Como estoy usando el guion bajo digo que el salario es un atributo protegido
     def __init__(self, name, salary):
         self.name = name
-        # Usar la información desde dentro de la clase
+        # Usar la información desde dentro de la clase. El salario es un atributro protegido
         self._salary = salary
 
     # Aca se usa property porque es de tipo getter.
@@ -43,3 +43,4 @@ print(employee.salary)
 
 # Para eliminar
 del employee.salary
+print(employee.salary)
