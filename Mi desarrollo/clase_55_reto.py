@@ -14,10 +14,27 @@ class Pedido:
             print("Vuelva a hacer el pedido")
 
     @classmethod
-    def descuento_global(cls, amount, nuevo_descuento):
+    def descuento_global(cls, nuevo_descuento):
         cls.descuento = nuevo_descuento
-        return cls.descuento * amount
+        return cls.descuento
+
+    @classmethod
+    def crear_pedido_con_descuento(cls, amount):
+        monto_final = amount - (1 * (amount * cls.descuento))
+        return cls(monto_final)
 
 
-Pedido.pedido_min(110, 50)
-print(Pedido.descuento_global(20000, 0.21))
+print("Pedido con el descuento original")
+pedido_1 = Pedido.crear_pedido_con_descuento(50000)
+print(pedido_1.amount)
+print(f"El valor final con el descuento aplicado global es de {pedido_1.amount}")
+
+print(" ")
+print("Pedido con el descuento del 25%")
+descuento_2 = Pedido.descuento_global(0.25)
+pedido_2 = Pedido.crear_pedido_con_descuento(50000)
+print(pedido_2.amount)
+print(f"El valor final con el descuento aplicado global es de {pedido_2.amount}")
+print(
+    pedido_1.amount
+)  # ¿sigue en 40000.0, o cambió a 37500 después de actualizar el descuento?
